@@ -16,7 +16,7 @@
             'AdvertiserId',
             'CampaignId',
             'BidlistId',
-            'GoodValue',
+            { key: 'GoodValue', label: 'Good Value (฿)' },
             'Options',
           ]"
         >

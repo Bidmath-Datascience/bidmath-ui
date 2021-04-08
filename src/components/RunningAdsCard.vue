@@ -72,7 +72,7 @@ export default {
     handleOk() {
       /// call add api
       axios
-        .post(process.env.VUE_APP_BASE_URL + "/create_job", {
+        .post(process.env.VUE_APP_BASE_URL + "/job", {
           advertiser_id: this.adsId,
         })
         .then(() => {
@@ -91,7 +91,7 @@ export default {
     deleteAd(ad_name) {
       this.adsModal = !this.adsModal;
       axios
-        .delete(process.env.VUE_APP_BASE_URL + "/delete", {
+        .delete(process.env.VUE_APP_BASE_URL + "/job", {
           params: {
             advertiser_id: ad_name,
           },
