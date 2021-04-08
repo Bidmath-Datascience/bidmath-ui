@@ -1,0 +1,264 @@
+{
+    "CampaignId": "qdssdhn",
+    "AdGroupId": "o58iihf",
+    "AdGroupName": "TH_PG_B - TH_PG_B - Bidmath_Skin_Olay_Super_Serum_OLVN_OpenX",
+    "Description": null,
+    "IsEnabled": true,
+    "IsHighFillRate": false,
+    "IndustryCategoryId": null,
+    "RTBAttributes": {
+        "BudgetSettings": {
+            "Budget": { "Amount": 6720.0, "CurrencyCode": "USD" },
+            "BudgetInImpressions": null,
+            "DailyBudget": null,
+            "DailyBudgetInImpressions": null,
+            "PacingEnabled": true,
+            "PacingMode": "PaceAhead",
+            "AutoAllocatorPriority": 1
+        },
+        "BaseBidCPM": { "Amount": 2.45, "CurrencyCode": "USD" },
+        "MaxBidCPM": { "Amount": 2.95, "CurrencyCode": "USD" },
+        "AudienceTargeting": {
+            "AudienceExcluderEnabled": false,
+            "AudienceRetargetingEnabled": false,
+            "AudienceRetargetingSettings": {
+                "CustomizeRetargetingAudience": false,
+                "FirstPartyDataIds": []
+            },
+            "AudienceExcluderFee": {
+                "PercentOfMediaCostRate": null,
+                "PercentOfDataCostRate": null,
+                "CPMRate": { "Amount": 0.09, "CurrencyCode": "USD" },
+                "CPMRateInAdvertiserCurrency": {
+                    "Amount": 0.09,
+                    "CurrencyCode": "USD"
+                },
+                "CPCRate": null,
+                "CPCRateInAdvertiserCurrency": null
+            },
+            "TargetTrackableUsersEnabled": false,
+            "TargetDemographicSettings": null,
+            "TargetInterestSettingsEnabled": false,
+            "TargetInterestSettings": null,
+            "TargetTrackableUsersFee": {
+                "PercentOfMediaCostRate": null,
+                "PercentOfDataCostRate": null,
+                "CPMRate": { "Amount": 0.0, "CurrencyCode": "USD" },
+                "CPMRateInAdvertiserCurrency": {
+                    "Amount": 0.0,
+                    "CurrencyCode": "USD"
+                },
+                "CPCRate": null,
+                "CPCRateInAdvertiserCurrency": null
+            },
+            "CrossDeviceVendorListForAudience": [],
+            "AudienceId": "i68nqoe",
+            "RecencyExclusionWindowInMinutes": 2147483647,
+            "AudiencePredictorEnabled": false
+        },
+        "ROIGoal": { "VCRInPercent": 90.0 },
+        "CreativeIds": ["clymjy0m", "eakkkttu"],
+        "IsUseClicksAsConversionsEnabled": false,
+        "IsUseSecondaryConversionsEnabled": false,
+        "DimensionalBiddingAutoOptimizationSettings": [],
+        "KoaOptimizationsVersion": "V3",
+        "ContractTargeting": {
+            "AllowOpenMarketBiddingWhenTargetingContracts": false,
+            "DeliveryProfileAdjustments": [],
+            "UseContractFloorPriceAsBaseBid": false
+        },
+        "NielsenSettings": {
+            "Fee": {
+                "PercentOfMediaCostRate": null,
+                "PercentOfDataCostRate": null,
+                "CPMRate": {
+                    "Amount": 0.00036046140212949064,
+                    "CurrencyCode": "USD"
+                },
+                "CPMRateInAdvertiserCurrency": {
+                    "Amount": 0.00036046140212949064,
+                    "CurrencyCode": "USD"
+                },
+                "CPCRate": null,
+                "CPCRateInAdvertiserCurrency": null
+            },
+            "NielsenTrackingAttributes": {
+                "EnhancedReportingOption": "Audience",
+                "Gender": "Female",
+                "StartAge": "TwentyFive",
+                "EndAge": "SixtyFourPlus",
+                "Countries": ["TH"]
+            }
+        },
+        "ComscoreSettings": {
+            "Fee": {
+                "PercentOfMediaCostRate": null,
+                "PercentOfDataCostRate": null,
+                "CPMRate": {
+                    "Amount": 0.002883691217035925,
+                    "CurrencyCode": "USD"
+                },
+                "CPMRateInAdvertiserCurrency": {
+                    "Amount": 0.002883691217035925,
+                    "CurrencyCode": "USD"
+                },
+                "CPCRate": null,
+                "CPCRateInAdvertiserCurrency": null
+            },
+            "Enabled": false,
+            "PopulationId": null,
+            "DemographicMemberIds": null,
+            "MobileDemographicMemberIds": null
+        }
+    },
+    "Availability": "Available",
+    "CreatedAtUTC": "2021-03-16T04:39:57.327",
+    "LastUpdatedAtUTC": "2021-03-16T04:39:57.327",
+    "AssociatedBidLists": [
+        {
+            "BidListId": "21207",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "BlockList",
+            "BidListDimensions": ["HasDomainFragmentId"]
+        },
+        {
+            "BidListId": "67772101",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "BlockList",
+            "BidListDimensions": ["HasDomainFragmentId"]
+        },
+        {
+            "BidListId": "67772213",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "BlockList",
+            "BidListDimensions": ["HasDomainFragmentId"]
+        },
+        {
+            "BidListId": "85932723",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "TargetList",
+            "BidListDimensions": ["HasDeviceTypeId"]
+        },
+        {
+            "BidListId": "85932724",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "TargetList",
+            "BidListDimensions": ["HasRenderingContextId"]
+        },
+        {
+            "BidListId": "85932725",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "TargetList",
+            "BidListDimensions": ["HasGeoSegmentId"]
+        },
+        {
+            "BidListId": "85932726",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "BlockList",
+            "BidListDimensions": ["HasGrapeshotBrandSafetyCategoryId"]
+        },
+        {
+            "BidListId": "85932727",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "BlockList",
+            "BidListDimensions": ["HasGrapeshotContextualCategoryId"]
+        },
+        {
+            "BidListId": "85932728",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "Optimized",
+            "BidListDimensions": ["HasVideoPlayerSizeId"]
+        },
+        {
+            "BidListId": "85932732",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "TargetList",
+            "BidListDimensions": ["HasVideoCompletionRateScoreRange"]
+        },
+        {
+            "BidListId": "85932734",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "TargetList",
+            "BidListDimensions": ["HasVideoViewabilityScoreRange"]
+        },
+        {
+            "BidListId": "85932737",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "BlockList",
+            "BidListDimensions": ["HasVideoMutedStateId"]
+        },
+        {
+            "BidListId": "85932739",
+            "IsEnabled": true,
+            "IsDefaultForDimension": true,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "BlockList",
+            "BidListDimensions": ["HasVideoPlaybackTypeId"]
+        },
+        {
+            "BidListId": "89389611",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+            "BidListSource": "AutoAppliedRecommendation",
+            "BidListAdjustmentType": "Optimized",
+            "BidListDimensions": ["HasPlacementPositionRelativeToFoldId"]
+        },
+        {
+            "BidListId": "89494924",
+            "IsEnabled": false,
+            "IsDefaultForDimension": false,
+            "BidListSource": "User",
+            "BidListAdjustmentType": "TargetList",
+            "BidListDimensions": ["HasDomainFragmentId"]
+        }
+    ],
+    "CustomLabels": [],
+    "AreFutureKoaFeaturesEnabled": false,
+    "PredictiveClearingEnabled": true,
+    "UseIdentityAlliance": false,
+    "CurrentAndFutureAdditionalFeeCards": [],
+    "AdBrainHouseholdCrossDeviceEnabled": false,
+    "NewBidLists": [
+        {
+            "BidListAdjustmentType": "TargetList",
+            "Name": "nte9ekw_qdssdhn_o58iihf",
+            "BidListOwner": "Adgroup",
+            "BidListOwnerId": "o58iihf",
+            "ResolutionType": "ApplyMultiplyAdjustment",
+            "BidLines": [
+                { "DomainFragment": "tunebat.com", "City": "Khlong Luang" },
+                { "DomainFragment": "krunker.io", "City": "Yala" },
+                { "DomainFragment": "www.iq.com", "City": "Pathum Thani" },
+                {
+                    "DomainFragment": "www.chordzaa.com",
+                    "City": "Bang Bua Thong"
+                },
+                { "DomainFragment": "today.line.me", "City": "Khlong Luang" }
+            ]
+        }
+    ]
+}
