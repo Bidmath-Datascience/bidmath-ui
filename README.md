@@ -1,6 +1,12 @@
 # bitmath-ui
 
+## Prerequisite
+  - [Node.js](https://nodejs.org/en/)
+
 ## Project setup
+``` 
+npm install -g yarn
+```
 ```
 yarn install
 ```
