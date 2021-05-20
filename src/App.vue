@@ -1,22 +1,18 @@
 <template>
   <div id="app">
-    <h2>Bidmath - Programmatic AI</h2>
-    <div v-if="advertiser.length !== 0">
-      <div class="card-list">
-        <CreateAdgroup :advertiser="advertiser" />
-        <!-- <PredictCard :advertiser="advertiser" /> -->
-        <RunningAdsCard
+    <img src="../src/assets/logo.png" alt="Bidmath" />
+
+    <div class="card-list">
+      <CreateAdgroup />
+      <!-- <PredictCard :advertiser="advertiser" /> -->
+      <!-- <RunningAdsCard
           :advertiser="advertiser"
           @create-job="(payload) => this.advertiser.push(payload)"
           @delete-job="(payload) => (this.advertiser = payload)"
           @update-job="updateJob"
-        />
-        <LastupdateCard />
-        <QueryCard :advertiser="advertiser" class="last-card" />
-      </div>
-    </div>
-    <div v-else class="spinner">
-      <b-spinner variant="success" label="Spinning"></b-spinner>
+        /> -->
+
+      <!-- <QueryCard :advertiser="advertiser" class="last-card" /> -->
     </div>
   </div>
 </template>
@@ -24,18 +20,18 @@
 <script>
 import axios from "axios";
 
-import LastupdateCard from "./components/LastupdateCard";
-import RunningAdsCard from "./components/RunningAdsCard";
-import QueryCard from "./components/QueryCard";
+// import LastupdateCard from "./components/LastupdateCard";
+// import RunningAdsCard from "./components/RunningAdsCard";
+// import QueryCard from "./components/QueryCard";
 // import PredictCard from "./components/PredictCard";
 import CreateAdgroup from "./components/CreateAdgroup";
 
 export default {
   name: "App",
   components: {
-    LastupdateCard,
-    RunningAdsCard,
-    QueryCard,
+    // LastupdateCard,
+    // RunningAdsCard,
+    // QueryCard,
     // PredictCard,
     CreateAdgroup,
   },
@@ -61,7 +57,7 @@ export default {
     },
   },
   mounted() {
-    this.get_advertiser_list();
+    // this.get_advertiser_list();
   },
 };
 </script>

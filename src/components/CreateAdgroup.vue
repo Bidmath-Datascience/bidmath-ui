@@ -5,7 +5,7 @@
       sub-title="Create new adgroup associated to campiagn"
       class="api-card text-left"
     >
-      <div v-if="bidlistData.length > 0">
+      <div>
         <h4 class="bidlist-title">Avaliable Bidlists</h4>
         <b-table
           striped
@@ -16,7 +16,12 @@
             'AdvertiserId',
             'CampaignId',
             'BidlistId',
-            { key: 'GoodValue', label: 'Good Value (฿)' },
+            'AdGroupId',
+            'Goal_VCR',
+            'Goal_VR',
+            'Goal_CPCV_THB',
+            'Max_CPM_THB',
+            'Latest_update',
             'Options',
           ]"
         >
@@ -52,9 +57,6 @@
           <span v-else> Add </span>
         </b-button>
       </div>
-      <div v-else class="loading-bidlist">
-        <h4>Loading bidlist...</h4>
-      </div>
     </b-card>
     <b-modal
       v-model="addBidlistModal"
@@ -65,43 +67,81 @@
       <div class="input-group">
         <div class="select-group">
           <h5>Select advertiser id</h5>
-          <b-form-select
+          <b-form-input
             v-model="advertiserSelected"
-            :options="advertiserOptions"
-          ></b-form-select>
+            placeholder="Enter advertiser id"
+          ></b-form-input>
         </div>
         <div class="select-group">
           <h5>Select campaign id</h5>
-          <b-form-select
+          <b-form-input
             v-model="campaignSelected"
-            :options="campaignOptions"
-            :disabled="campaignOptions.length === 1 ? true : false"
-          ></b-form-select>
+            placeholder="Enter campaign id"
+            :disabled="advertiserSelected === '' ? true : false"
+          ></b-form-input>
         </div>
         <div class="select-group">
           <h5>Enter adgroup id</h5>
           <b-form-input
             v-model="adgroupInput"
-            :state="adgroupState"
-            aria-describedby="input-live-help input-live-feedback"
             placeholder="Enter adgroup id"
-            trim
             :disabled="campaignSelected === '' ? true : false"
           ></b-form-input>
         </div>
-        <div class="select-group-good-value">
-          <h5>Enter good value (in THB)</h5>
-          <div style="display: flex; align-items: center">
+        <div class="select-group">
+          <h5>Enter Goal_VCR</h5>
+          <div class="enter-value">
             <b-form-input
+              v-model="vcrValue"
+              type="number"
+              class="good-value-input-percent"
+            >
+            </b-form-input>
+            <h2 style="margin-left: 5px; color: #424447">%</h2>
+          </div>
+        </div>
+        <div class="select-group">
+          <h5>Enter Goal_VR</h5>
+          <div class="enter-value">
+            <b-form-input
+              v-model="vrValue"
+              type="number"
+              class="good-value-input-percent"
+            >
+            </b-form-input>
+            <h2 style="margin-left: 5px; color: #424447">%</h2>
+          </div>
+        </div>
+        <div class="select-group">
+          <h5>Enter Goal_CPCV</h5>
+          <div class="enter-value">
+            <b-form-input
+              v-model="cpcvValue"
+              type="number"
               class="good-value-input"
-              v-model="goodvalueInput"
-              :state="goodvalueState"
-              aria-describedby="input-live-help input-live-feedback"
-              placeholder="THB"
-              trim
-              :disabled="campaignSelected === '' ? true : false"
-            ></b-form-input>
-            <label class="usd">{{ convertToUs }} USD</label>
+            >
+            </b-form-input>
+            <b-form-select
+              class="currency"
+              v-model="cpcvCurrency"
+              :options="cpcvCurrencyOptions"
+            ></b-form-select>
+          </div>
+        </div>
+        <div class="select-group">
+          <h5>Enter Max_CPM</h5>
+          <div class="enter-value">
+            <b-form-input
+              v-model="cpmValue"
+              type="number"
+              class="good-value-input"
+            >
+            </b-form-input>
+            <b-form-select
+              class="currency"
+              v-model="cpmCurrency"
+              :options="cpmCurrencyOptions"
+            ></b-form-select>
           </div>
         </div>
         <div class="select-group">
@@ -110,7 +150,12 @@
             variant="primary"
             @click="createAdgroup"
             :disabled="
-              goodvalueState && adgroupState && !loadingAdd ? false : true
+              campaignSelected !== '' &&
+              advertiserSelected !== '' &&
+              adgroupInput !== '' &&
+              !loadingAdd
+                ? false
+                : true
             "
           >
             <pulse-loader
@@ -143,6 +188,9 @@ import axios from "axios";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import VueJsonPretty from "vue-json-pretty";
 import "vue-json-pretty/lib/styles.css";
+
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
 
 export default {
   name: "CreateAdgroup",
@@ -179,13 +227,31 @@ export default {
       bidlistRes: null,
       loadingAdd: false,
       loadingDelete: false,
+      cpcvCurrency: "thb",
+      cpmCurrency: "thb",
+      cpcvCurrencyOptions: [
+        { value: "thb", text: "฿" },
+        { value: "usd", text: "$" },
+      ],
+      cpmCurrencyOptions: [
+        { value: "thb", text: "฿" },
+        { value: "usd", text: "$" },
+      ],
+      cpmValue: 0.0,
+      cpcvValue: 0.0,
+      vcrValue: 0.0,
+      vrValue: 0.0,
     };
   },
   methods: {
     fetchBidlist() {
-      axios.get(process.env.VUE_APP_BASE_URL + "/show_bidlist").then((res) => {
+      axios.get(process.env.VUE_APP_BASE_URL + "/bidlist").then((res) => {
         this.bidlistData = res.data.message;
         console.log(this.bidlistData);
+        this.bidlistData = this.bidlistData.map((el) => ({
+          ...el,
+          Latest_update: new Date(el.Latest_update).toLocaleString(),
+        }));
         this.loadingDelete = false;
       });
     },
@@ -195,11 +261,16 @@ export default {
     createAdgroup() {
       this.loadingAdd = true;
       axios
-        .post(process.env.VUE_APP_BASE_URL + "/create_adgroup/", {
+        .post(process.env.VUE_APP_BASE_URL + "/bidlist", {
           advertiser_id: this.advertiserSelected,
           campaign_id: this.campaignSelected,
           adgroup_id: this.adgroupInput,
-          good_value: (+this.goodvalueInput / 31).toFixed(2),
+          vr_value: this.vrValue,
+          vcr_value: this.vcrValue,
+          cpcv_value: this.cpcvValue,
+          cpm_value: this.cpmValue,
+          cpcv_Currency: this.cpcvCurrency,
+          cpm_Currency: this.cpmCurrency,
         })
         .then((res) => {
           console.log(res.data);
@@ -211,12 +282,13 @@ export default {
         });
     },
     deleteBidlist(row) {
-      console.log("delete", row.item.BidlistId);
+      console.log("delete", row.item.BidlistId, row.item.AdGroupId);
       this.loadingDelete = true;
       axios
         .delete(process.env.VUE_APP_BASE_URL + "/bidlist", {
           params: {
-            bidlist: row.item.BidlistId,
+            BidlistID: row.item.BidlistId,
+            AdGroupId: row.item.AdGroupId,
           },
         })
         .then((res) => {
@@ -227,12 +299,12 @@ export default {
   },
   mounted() {
     this.fetchBidlist();
-    this.advertiser.forEach((el) => {
-      this.advertiserOptions.push({
-        value: el.name,
-        text: el.name,
-      });
-    });
+    // this.advertiser.forEach((el) => {
+    //   this.advertiserOptions.push({
+    //     value: el.name,
+    //     text: el.name,
+    //   });
+    // });
   },
   computed: {
     adgroupState() {
@@ -247,42 +319,42 @@ export default {
       return (+this.goodvalueInput / 31).toFixed(2);
     },
   },
-  watch: {
-    advertiserSelected(val) {
-      this.campaignOptions = [
-        {
-          value: "",
-          text: "Please select campaign id",
-          disabled: true,
-        },
-      ];
-      this.campaignOptions[0].text = "Loading..";
-      axios
-        .get(process.env.VUE_APP_BASE_URL + "/campaign_list", {
-          params: {
-            advertiserId: val,
-          },
-        })
-        .then((res) => {
-          res.data.message
-            .map((item) => ({
-              value: item.CampaignId,
-              text: item.CampaignId,
-            }))
-            .forEach((element) => {
-              this.campaignOptions.push(element);
-            });
-          console.log(this.campaignOptions);
-        })
-        .finally(() => {
-          if (this.campaignOptions.length === 1) {
-            this.campaignOptions[0].text = "No campaign avaliabe";
-          } else {
-            this.campaignOptions[0].text = "Please select campaign id";
-          }
-        });
-    },
-  },
+  // watch: {
+  //   advertiserSelected(val) {
+  //     this.campaignOptions = [
+  //       {
+  //         value: "",
+  //         text: "Please select campaign id",
+  //         disabled: true,
+  //       },
+  //     ];
+  //     this.campaignOptions[0].text = "Loading..";
+  //     axios
+  //       .get(process.env.VUE_APP_BASE_URL + "/campaign_list", {
+  //         params: {
+  //           advertiserId: val,
+  //         },
+  //       })
+  //       .then((res) => {
+  //         res.data.message
+  //           .map((item) => ({
+  //             value: item.CampaignId,
+  //             text: item.CampaignId,
+  //           }))
+  //           .forEach((element) => {
+  //             this.campaignOptions.push(element);
+  //           });
+  //         console.log(this.campaignOptions);
+  //       })
+  //       .finally(() => {
+  //         if (this.campaignOptions.length === 1) {
+  //           this.campaignOptions[0].text = "No campaign avaliabe";
+  //         } else {
+  //           this.campaignOptions[0].text = "Please select campaign id";
+  //         }
+  //       });
+  //   },
+  // },
 };
 </script>
 <style>
@@ -322,8 +394,47 @@ export default {
 .good-value-input {
   max-width: 120px;
 }
+.good-value-input-percent {
+  max-width: 70px;
+}
 .usd {
   padding-left: 10px;
   margin-bottom: 0;
+}
+.api-card {
+  width: 80%;
+  margin: auto;
+  margin-top: 50px;
+}
+.data-table {
+  margin: auto;
+  margin-top: 30px;
+}
+.ads-group {
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.ads-button {
+  height: 40px;
+  margin: 10px;
+}
+.button-group {
+  margin: 10px 10px 5px 5px;
+}
+.button-modal-group {
+  display: flex;
+  justify-content: space-around;
+}
+.enter-value {
+  display: flex;
+  flex-direction: row;
+  max-width: 150px;
+}
+.currency {
+  margin-left: 5px;
+  max-width: 50px;
 }
 </style>
