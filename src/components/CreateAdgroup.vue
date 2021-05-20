@@ -7,55 +7,60 @@
     >
       <div>
         <h4 class="bidlist-title">Avaliable Bidlists</h4>
-        <b-table
-          striped
-          hover
-          :items="bidlistData"
-          class="data-table"
-          :fields="[
-            'AdvertiserId',
-            'CampaignId',
-            'BidlistId',
-            'AdGroupId',
-            'Goal_VCR',
-            'Goal_VR',
-            'Goal_CPCV_THB',
-            'Max_CPM_THB',
-            'Latest_update',
-            'Options',
-          ]"
-        >
-          <template #cell(Options)="row">
-            <b-button
-              size="sm"
-              @click="deleteBidlist(row)"
-              class="mr-2"
-              variant="danger"
-              :disabled="loadingDelete"
-            >
-              <pulse-loader
-                v-if="loadingDelete"
-                size="10px"
-                color="#FBF9F8"
-              ></pulse-loader>
-              <span v-else>Remove</span>
-            </b-button>
-          </template></b-table
-        >
-        <b-button
-          class="add-button"
-          variant="primary"
-          @click="showAddBidlistModal"
-          :disabled="loadingAdd"
-        >
-          <pulse-loader
-            v-if="loadingAdd"
-            size="10px"
-            color="#FBF9F8"
-          ></pulse-loader>
+        <div v-if="!loadingBidlist">
+          <b-table
+            striped
+            hover
+            :items="bidlistData"
+            class="data-table"
+            :fields="[
+              'AdvertiserId',
+              'CampaignId',
+              'BidlistId',
+              'AdGroupId',
+              'Goal_VCR',
+              'Goal_VR',
+              'Goal_CPCV_THB',
+              'Max_CPM_THB',
+              'Latest_update',
+              'Options',
+            ]"
+          >
+            <template #cell(Options)="row">
+              <b-button
+                size="sm"
+                @click="deleteBidlist(row)"
+                class="mr-2"
+                variant="danger"
+                :disabled="loadingDelete"
+              >
+                <pulse-loader
+                  v-if="loadingDelete"
+                  size="10px"
+                  color="#FBF9F8"
+                ></pulse-loader>
+                <span v-else>Remove</span>
+              </b-button>
+            </template></b-table
+          >
+          <b-button
+            class="add-button"
+            variant="primary"
+            @click="showAddBidlistModal"
+            :disabled="loadingAdd"
+          >
+            <pulse-loader
+              v-if="loadingAdd"
+              size="10px"
+              color="#FBF9F8"
+            ></pulse-loader>
 
-          <span v-else> Add </span>
-        </b-button>
+            <span v-else> Add </span>
+          </b-button>
+        </div>
+        <div v-else-if="loadingBidlist" class="loading-spinner">
+          <b-spinner variant="danger" style="margin-top: 50px"></b-spinner>
+        </div>
       </div>
     </b-card>
     <b-modal
@@ -227,6 +232,7 @@ export default {
       bidlistRes: null,
       loadingAdd: false,
       loadingDelete: false,
+      loadingBidlist: false,
       cpcvCurrency: "thb",
       cpmCurrency: "thb",
       cpcvCurrencyOptions: [
@@ -245,6 +251,7 @@ export default {
   },
   methods: {
     fetchBidlist() {
+      this.loadingBidlist = true;
       axios.get(process.env.VUE_APP_BASE_URL + "/bidlist").then((res) => {
         this.bidlistData = res.data.message;
         console.log(this.bidlistData);
@@ -253,6 +260,7 @@ export default {
           Latest_update: new Date(el.Latest_update).toLocaleString(),
         }));
         this.loadingDelete = false;
+        this.loadingBidlist = false;
       });
     },
     showAddBidlistModal() {
@@ -436,5 +444,8 @@ export default {
 .currency {
   margin-left: 5px;
   max-width: 50px;
+}
+.loading-spinner {
+  text-align: center;
 }
 </style>
