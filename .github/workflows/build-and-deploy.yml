@@ -36,11 +36,10 @@ jobs:
         run: |
           gcloud --quiet beta run deploy $SERVICE_NAME --image asia.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
           --platform managed \
-          --set-env-vars="VUE_APP_BASE_URL=https://programmatic-ai-ttd-api-65yi52cppa-as.a.run.app" \
           --allow-unauthenticated \
           --cpu 4 \
           --memory 6G \
-          --region asia-southeast1 \
+          --region us-east1 \
           --max-instances 10 \
           --port 8080 \
           --timeout 60m

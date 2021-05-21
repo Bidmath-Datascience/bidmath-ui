@@ -99,6 +99,8 @@
             <b-form-input
               v-model="vcrValue"
               type="number"
+              min="0"
+              max="100"
               class="good-value-input-percent"
             >
             </b-form-input>
@@ -111,6 +113,8 @@
             <b-form-input
               v-model="vrValue"
               type="number"
+              min="0"
+              max="100"
               class="good-value-input-percent"
             >
             </b-form-input>
@@ -254,7 +258,7 @@ export default {
       this.loadingBidlist = true;
       axios.get(process.env.VUE_APP_BASE_URL + "/bidlist").then((res) => {
         this.bidlistData = res.data.message;
-        console.log(this.bidlistData);
+        // console.log(this.bidlistData);
         this.bidlistData = this.bidlistData.map((el) => ({
           ...el,
           Latest_update: new Date(el.Latest_update).toLocaleString(),
@@ -281,7 +285,7 @@ export default {
           cpm_Currency: this.cpmCurrency,
         })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.createAdgroupRes = res.data;
           this.fetchBidlist();
         })
@@ -290,7 +294,7 @@ export default {
         });
     },
     deleteBidlist(row) {
-      console.log("delete", row.item.BidlistId, row.item.AdGroupId);
+      // console.log("delete", row.item.BidlistId, row.item.AdGroupId);
       this.loadingDelete = true;
       axios
         .delete(process.env.VUE_APP_BASE_URL + "/bidlist", {
@@ -299,8 +303,8 @@ export default {
             AdGroupId: row.item.AdGroupId,
           },
         })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           this.fetchBidlist();
         });
     },
@@ -327,42 +331,52 @@ export default {
       return (+this.goodvalueInput / 31).toFixed(2);
     },
   },
-  // watch: {
-  //   advertiserSelected(val) {
-  //     this.campaignOptions = [
-  //       {
-  //         value: "",
-  //         text: "Please select campaign id",
-  //         disabled: true,
-  //       },
-  //     ];
-  //     this.campaignOptions[0].text = "Loading..";
-  //     axios
-  //       .get(process.env.VUE_APP_BASE_URL + "/campaign_list", {
-  //         params: {
-  //           advertiserId: val,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         res.data.message
-  //           .map((item) => ({
-  //             value: item.CampaignId,
-  //             text: item.CampaignId,
-  //           }))
-  //           .forEach((element) => {
-  //             this.campaignOptions.push(element);
-  //           });
-  //         console.log(this.campaignOptions);
-  //       })
-  //       .finally(() => {
-  //         if (this.campaignOptions.length === 1) {
-  //           this.campaignOptions[0].text = "No campaign avaliabe";
-  //         } else {
-  //           this.campaignOptions[0].text = "Please select campaign id";
-  //         }
-  //       });
-  //   },
-  // },
+  watch: {
+    // vcrValue(val) {
+    //   if (+val > 100 || +val < 0) {
+    //     this.vcrValue = 0.0;
+    //   }
+    // },
+    // vrValue(val) {
+    //   if (val > 100 || val < 0) {
+    //     this.vrValue = "";
+    //   }
+    // },
+    //   advertiserSelected(val) {
+    //     this.campaignOptions = [
+    //       {
+    //         value: "",
+    //         text: "Please select campaign id",
+    //         disabled: true,
+    //       },
+    //     ];
+    //     this.campaignOptions[0].text = "Loading..";
+    //     axios
+    //       .get(process.env.VUE_APP_BASE_URL + "/campaign_list", {
+    //         params: {
+    //           advertiserId: val,
+    //         },
+    //       })
+    //       .then((res) => {
+    //         res.data.message
+    //           .map((item) => ({
+    //             value: item.CampaignId,
+    //             text: item.CampaignId,
+    //           }))
+    //           .forEach((element) => {
+    //             this.campaignOptions.push(element);
+    //           });
+    //         console.log(this.campaignOptions);
+    //       })
+    //       .finally(() => {
+    //         if (this.campaignOptions.length === 1) {
+    //           this.campaignOptions[0].text = "No campaign avaliabe";
+    //         } else {
+    //           this.campaignOptions[0].text = "Please select campaign id";
+    //         }
+    //       });
+    //   },
+  },
 };
 </script>
 <style>
