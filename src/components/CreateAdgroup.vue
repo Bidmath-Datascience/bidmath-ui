@@ -258,9 +258,11 @@ export default {
       this.loadingBidlist = true;
       axios.get(process.env.VUE_APP_BASE_URL + "/bidlist").then((res) => {
         this.bidlistData = res.data.message;
-        // console.log(this.bidlistData);
+        console.log(this.bidlistData);
         this.bidlistData = this.bidlistData.map((el) => ({
           ...el,
+          Goal_VCR: `${+el.Goal_VCR * 100} %`,
+          Goal_VR: `${+el.Goal_VR * 100} %`,
           Latest_update: new Date(el.Latest_update).toLocaleString(),
         }));
         this.loadingDelete = false;
