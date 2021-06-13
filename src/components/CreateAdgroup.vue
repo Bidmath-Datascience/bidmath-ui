@@ -21,7 +21,8 @@
               'Goal_VCR',
               'Goal_VR',
               'Goal_CPCV_THB',
-              'Max_CPM_THB',
+              'CPM_THB',
+              'Bid_Type',
               'Latest_update',
               'Options',
             ]"
@@ -122,6 +123,16 @@
           </div>
         </div>
         <div class="select-group">
+          <h5>Select BidAdjustment</h5>
+          <div class="enter-value">
+            <b-form-select
+              class="bidtype"
+              v-model="bidType"
+              :options="bidTypeOptions"
+            ></b-form-select>
+          </div>
+        </div>
+        <div class="select-group">
           <h5>Enter Goal_CPCV</h5>
           <div class="enter-value">
             <b-form-input
@@ -138,7 +149,7 @@
           </div>
         </div>
         <div class="select-group">
-          <h5>Enter Max_CPM</h5>
+          <h5>Enter Min_CPM</h5>
           <div class="enter-value">
             <b-form-input
               v-model="cpmValue"
@@ -237,8 +248,13 @@ export default {
       loadingAdd: false,
       loadingDelete: false,
       loadingBidlist: false,
+      bidType: "Optimized",
       cpcvCurrency: "thb",
       cpmCurrency: "thb",
+      bidTypeOptions: [
+        { value: "Optimized", text: "Optimized" },
+        { value: "TargetList", text: "TargetList" },
+      ],
       cpcvCurrencyOptions: [
         { value: "thb", text: "฿" },
         { value: "usd", text: "$" },
@@ -281,6 +297,7 @@ export default {
           adgroup_id: this.adgroupInput,
           vr_value: this.vrValue,
           vcr_value: this.vcrValue,
+          adjustment_type: this.bidType,
           cpcv_value: this.cpcvValue,
           cpm_value: this.cpmValue,
           cpcv_Currency: this.cpcvCurrency,
@@ -455,6 +472,10 @@ export default {
 .enter-value {
   display: flex;
   flex-direction: row;
+  max-width: 150px;
+}
+.bidtype {
+  margin-left: 5px;
   max-width: 150px;
 }
 .currency {
