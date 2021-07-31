@@ -1,11 +1,20 @@
 import Vue from 'vue'
+import vuetify from './plugins/vuetify'
 import App from './App.vue'
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import store from './store/index'
+import router from './Routes'
+import VueCookies from 'vue-cookies';
+import axios from "axios";
 
-Vue.use(BootstrapVue)
-Vue.use(BootstrapVueIcons)
+Vue.use(VueCookies);
+Vue.use(axios);
+
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+
 
 Vue.config.productionTip = false
 new Vue({
-  render: h => h(App),
+  vuetify,
+  router,
+  render: h => h(App), store
 }).$mount('#app')
