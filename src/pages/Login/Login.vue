@@ -99,8 +99,8 @@ import GoogleSignInButton from "vue-google-signin-button-directive";
     data() {
       return {
         userform: {
-        username: 'mahesh.babu@bidmath.com',
-        password: 'alaska'
+        username: '',
+        password: ''
       },
         emailRules: [
           v => !!v || 'E-mail is required',
