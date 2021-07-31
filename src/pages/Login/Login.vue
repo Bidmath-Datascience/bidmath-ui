@@ -15,7 +15,7 @@
                 <v-tabs grow>
                   <v-tabs-slider></v-tabs-slider>
                   <v-tab :href="`#tab-login`">
-                    LOGIN
+                    BIDMATH LOGIN
                   </v-tab>
 
                   <v-tab-item :value="'tab-login'" >
