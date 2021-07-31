@@ -15,7 +15,7 @@
                 <v-tabs grow>
                   <v-tabs-slider></v-tabs-slider>
                   <v-tab :href="`#tab-login`">
-                    LOGIN
+                    BIDMATH LOGIN
                   </v-tab>
 
                   <v-tab-item :value="'tab-login'" >
@@ -99,8 +99,8 @@ import GoogleSignInButton from "vue-google-signin-button-directive";
     data() {
       return {
         userform: {
-        username: 'mahesh.babu@bidmath.com',
-        password: 'alaska'
+        username: '',
+        password: ''
       },
         emailRules: [
           v => !!v || 'E-mail is required',
