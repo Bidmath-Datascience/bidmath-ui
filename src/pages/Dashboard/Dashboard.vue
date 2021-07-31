@@ -289,7 +289,7 @@ export default {
           advertiser_id : "",
           campaign_id: "",
           adgroup_id: "",
-          vr_value: 0.85,
+          vr_value: 85,
           vcr_value:0,
           adjustment_type:'',
           goal_type: '',
