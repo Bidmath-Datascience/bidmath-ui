@@ -13,7 +13,8 @@
         <v-icon style="font-size: 28px">mdi-menu</v-icon>
       </template>
     </v-btn>
-    <v-toolbar-title>Bidmath</v-toolbar-title>
+    <v-img  max-height="28"
+  max-width="120" src="@/assets/logo_name.png"></v-img>
     <v-spacer></v-spacer>
 
     <v-menu
@@ -87,17 +88,14 @@ import axios from "axios";
            }
       }
       ).then((res) => {
-        if (res.ok) {
-          this.username = res.data.name
-        } else
-        {
+        if (res.status != 200) {
           this.$router.push('/login');
         }
       });
     }
   },
   mounted () {
-    //this.authenticateUser();
+    this.authenticateUser();
     this.username = window.localStorage.getItem('username') 
   },
   }

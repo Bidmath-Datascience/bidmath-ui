@@ -9,6 +9,7 @@ import Reset from "@/pages/Login/Reset";
 import Dashboard from '@/pages/Dashboard/Dashboard';
 import Icons from '@/pages/Icons/Icons';
 import Error from "@/pages/Error/Error";
+import Tradedesk from '@/pages/Tradedesk/Tradedesk';
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
           path: 'dashboard',
           name: 'Dashboard',
           component: Dashboard,
+        },
+        {
+          path: 'tradedesk',
+          name: 'Tradedesk',
+          component: Tradedesk,
         },
         {
           path: 'icons',

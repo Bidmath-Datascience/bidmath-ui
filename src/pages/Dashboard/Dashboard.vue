@@ -10,7 +10,7 @@
             <v-row >
             <v-col>
             <v-card-title class="pa-6 pb-0">
-              <p>Active Bidlists</p>
+              <p>Live Algo Adgroups</p>
               <v-spacer></v-spacer>
             </v-card-title>
             </v-col>
@@ -235,7 +235,30 @@
                   required
                 ></v-select>
               </v-col>
+              <v-col
+              >
+                <v-text-field
+                  v-model="postdata.dimension_list"
+                  label="Dimension List"
+                  persistent-hint
+                  required
+                ></v-text-field>
+              </v-col>
 
+            </v-row>
+            <p>Result</p>
+            <v-row>
+              <div class="json-result">
+          <vue-json-pretty
+            showLength
+            showLine
+            :data="adddialogresult"
+            :virtual="true"
+            :itemHeight="10"
+            class="bidlist-area-text"
+          >
+        </vue-json-pretty>
+      </div>
             </v-row>
           </v-container>
         </v-card-text>
@@ -284,6 +307,7 @@ export default {
       loadingBidlist: false,
       token:'',
       adddialog: false,
+      adddialogresult: "testtt",
       postdata: {
           partner: "",
           advertiser_id : "",
@@ -296,7 +320,8 @@ export default {
           goal_value:'',
           cpm_value: '',
           goal_currency: '',
-          cpm_currency: ''
+          cpm_currency: '',
+          dimension_list: 'Site,DeviceType,RenderingContext'
       },
 
     };
@@ -352,8 +377,6 @@ export default {
     },
     createAdgroup() {
       this.loadingAdd = true;
-      console.log(this.token)
-      console.log(this.postdata)
       axios
         .post(process.env.VUE_APP_BASE_URL + "/ttd_api/bidlist", 
         this.postdata, { 
@@ -364,11 +387,12 @@ export default {
         .then((res) => {
           console.log(res.data);
           // this.createAdgroupRes = res.data;
+          this.adddialogresult = res.data.message;
           this.fetchBidlist();
         })
         .finally(() => {
           this.loadingAdd = false;
-          this.adddialog = false;
+          this.adddialog = true;
         });
     },
   },
