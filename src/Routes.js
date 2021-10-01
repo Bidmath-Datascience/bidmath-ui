@@ -7,7 +7,7 @@ import Layout from '@/components/Layout/Layout';
 import Login from "@/pages/Login/Login";
 import Reset from "@/pages/Login/Reset";
 import Dashboard from '@/pages/Dashboard/Dashboard';
-import Icons from '@/pages/Icons/Icons';
+//import Icons from '@/pages/Icons/Icons';
 import Error from "@/pages/Error/Error";
 import Tradedesk from '@/pages/Tradedesk/Tradedesk';
 
@@ -41,11 +41,11 @@ export default new Router({
           name: 'Tradedesk',
           component: Tradedesk,
         },
-        {
-          path: 'icons',
-          name: 'Icons',
-          component: Icons
-        },
+        //{
+        //  path: 'icons',
+        //  name: 'Icons',
+        //  component: Icons
+        //},
       ],
     },
     {
