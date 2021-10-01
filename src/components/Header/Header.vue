@@ -84,7 +84,7 @@ import axios from "axios";
         axios.get(process.env.VUE_APP_BASE_URL + "/auth",
       { 
            headers: {"Content-Type": "application/json",
-           'Authorization':  this.$cookie.get('token')
+           'Authorization':  `Bearer ${this.$cookies.get("token").access_token}` 
            }
       }
       ).then((res) => {

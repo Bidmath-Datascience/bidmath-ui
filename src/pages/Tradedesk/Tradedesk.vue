@@ -74,7 +74,7 @@
         <template>
         <v-card-text class="pa-0" v-if="!loadingBidlist">
           <v-data-table :headers="bidlist_headers" :items="bidlistData" class="elevation-1"
-          :single-expand="singleExpand" show-expand
+          :single-expand=true show-expand item-key="bidlist_id"
           :expanded.sync="expanded">
           <template v-slot:item.options = "{item}">
             <v-icon medium @click="deleteBidlist(item)"  :disabled="loadingDelete" >
@@ -83,8 +83,8 @@
             </template>
             <template v-slot:expanded-item="{ headers, item }">
             <td> </td>
-            <td :colspan="headers.length-1">
-              <v-card flat>
+            <td :colspan="headers.length-2">
+              <v-card flat >
                 <v-list-item>
                 <v-list-item-content>
                 <v-list-item-title>goal_vr :{{ item.goal_vr }},  goal_vcr :{{ item.goal_vcr }}, goal_value_partner :{{ item.goal_value_partner }}, cpm_value_partner: {{item.cpm_value_partner}}</v-list-item-title>
@@ -194,7 +194,7 @@
                 md="4"
               >
                 <v-text-field
-                  v-model="postbidlistdata.vcr_value"
+                  v-model="postbidlistdata.goal_vcr"
                   label="Goal VCR %"
                   persistent-hint
                   required
@@ -206,7 +206,7 @@
                 md="4"
               >
                 <v-text-field
-                  v-model="postbidlistdata.vr_value"
+                  v-model="postbidlistdata.goal_vr"
                   label="Goal VR %"
                 ></v-text-field>
               </v-col>
@@ -374,7 +374,7 @@
                 md="4"
               >
                 <v-text-field
-                  v-model="postbidlistdata.vcr_value"
+                  v-model="postbidlistdata.goal_vcr"
                   label="Goal VCR %"
                   persistent-hint
                   required
@@ -386,7 +386,7 @@
                 md="4"
               >
                 <v-text-field
-                  v-model="postbidlistdata.vr_value"
+                  v-model="postbidlistdata.goal_vr"
                   label="Goal VR %"
                 ></v-text-field>
               </v-col>
@@ -518,7 +518,7 @@ export default {
   data() {
     return {
       expanded: [],
-      singleExpand: false,
+      singleExpand: true,
       adgroup_headers: [
         {
           text: 'NAME',
@@ -564,7 +564,7 @@ export default {
           advertiser_id : "",
           campaign_id: "",
           adgroup_id: "",
-          create_algo: 0
+          create_algo: false
       },
       postbidlistdata: {
         partner: "",
@@ -584,10 +584,7 @@ export default {
         cpm_value: '' ,
         cpm_currency: ""
       },
-      postCreateAdgroupdta: {
-        "adgroup": this.postadgroupdata,
-        "bidlist": this.postbidlistdata
-      }
+      postCreateAdgroupdta: {}
 
     };
   },
@@ -644,22 +641,23 @@ export default {
     },
     changeState(item) {
       this.loadingBidlist = true;
-      console.log(this.token);
-      console.log(item);
-      axios.post(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_adgroup_status/"+ item.adgroup_id, {
-            params: {
-            partner: item.partner,
-            adgroup_id: item.adgroup_id,
-            value: item.status
-          },
-           headers: {"Content-Type": "application/json",
+      axios.post(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_adgroup_status/"+ item.adgroup_id,
+          {}, {
+          params: { partner: item.partner,
+            value: !item.status,
+            adgroup_id: item.adgroup_id},
+          headers: {"Content-Type": "application/json",
            'Authorization':  `Bearer ${this.token}`
-           }
+          }
         })
         .then((res) => {
+          if (res.status == 200){
           console.log(res.data);
           // this.createAdgroupRes = res.data;
           this.fetchAdgroup();
+          } else {
+            this.$router.push('/login');
+        }
         });
     },
     showAddBidlistModal(item) {
@@ -675,6 +673,7 @@ export default {
     deleteBidlist(row) {
       // console.log("delete", row.item.BidlistId, row.item.AdGroupId);
       this.loadingDelete = true;
+      this.loadingBidlist = true;
       axios.delete(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_bidlist/"+row.bidlist_id, {
           params: {
             partner: row.partner,
@@ -692,6 +691,7 @@ export default {
     deleteAdgroup(row) {
       // console.log("delete", row.item.BidlistId, row.item.AdGroupId);
       this.loadingDelete = true;
+      this.loadingBidlist = true;
       axios.delete(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_adgroup/"+row.adgroup_id, {
           params: {
             partner: row.partner,
@@ -709,12 +709,15 @@ export default {
     },
     createAdgroup() {
       this.loadingAdd = true;
-      console.log(this.postadgroupdata);
-      console.log(this.postbidlistdata);
-      axios
-        .post(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_adgroup", 
+      if (this.postadgroupdata.create_algo) {
+        this.postCreateAdgroupdta.adgroup = this.postadgroupdata;
+        this.postCreateAdgroupdta.bidlist = this.postbidlistdata;
+      } else {
+        this.postCreateAdgroupdta.adgroup = this.postadgroupdata;
+      }
+      axios.post(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_adgroup",
+      this.postCreateAdgroupdta,
         { 
-          body: {"adgroup" : this.postadgroupdata, "bidlist" : this.postbidlistdata},
           headers: {"Content-Type": "application/json",
            'Authorization':  `Bearer ${this.token}`
            }
@@ -749,7 +752,7 @@ export default {
         })
         .finally(() => {
           this.loadingAdd = false;
-          this.addadgroupdialog = true;
+          this.addbidlistdialog = true;
         });
     },
   },
