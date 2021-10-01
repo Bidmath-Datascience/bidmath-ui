@@ -540,6 +540,7 @@ export default {
           value: 'bidlist_id',
         },
         { text: 'PARTNER', value: 'partner' },
+        { text: 'NAME', value: 'name' },
         { text: 'ADGROUP', value: 'adgroup_id' },
         { text: 'STRATEGY', value: 'strategy' },
         { text: 'GOALTYPE', value: 'goal_type' },
