@@ -587,18 +587,19 @@ export default {
         partner: "",
         advertiser_id : "",
         campaign_id: "",
+        bidlist_id: "",
         adgroup_id: "",
         strategy: "algo",
         goal_type: "vcpm",
-        goal_vr: '',
-        goal_vcr:'',
-        count: '1000',
+        goal_vr: "",
+        goal_vcr:"",
+        count: "1000",
         owner: "Adgroup",
         owner_id: "",
         dimension_list: "Site,DeviceType,RenderingContext",
-        goal_value: '',       
-        goal_currency: "",
-        cpm_value: '' ,
+        goal_value: " ",       
+        goal_currency: " ",
+        cpm_value: " " ,
         cpm_currency: ""
       },
       postCreateAdgroupdta: {}
@@ -682,9 +683,11 @@ export default {
       this.postbidlistdata.adgroup_id = item.adgroup_id;
       this.postbidlistdata.advertiser_id = item.advertiser_id;
       this.postbidlistdata.campaign_id = item.campaign_id;
+      this.adddialogresult= "No response yet";
       this.addbidlistdialog = true;
     },
     showAddAdgroupModal() {
+      this.adddialogresult= "No response yet";
       this.addadgroupdialog = true;
     },
     deleteBidlist(row) {
@@ -727,6 +730,10 @@ export default {
     createAdgroup() {
       this.loadingAdd = true;
       if (this.postadgroupdata.create_algo) {
+        this.postbidlistdata.partner = this.postadgroupdata.partner;
+        this.postbidlistdata.adgroup_id = this.postadgroupdata.adgroup_id;
+        this.postbidlistdata.advertiser_id = this.postadgroupdata.advertiser_id;
+        this.postbidlistdata.campaign_id = this.postadgroupdata.campaign_id;
         this.postCreateAdgroupdta.adgroup = this.postadgroupdata;
         this.postCreateAdgroupdta.bidlist = this.postbidlistdata;
       } else {
