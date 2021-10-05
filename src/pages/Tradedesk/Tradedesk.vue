@@ -246,7 +246,7 @@
                   required
                 ></v-select>
               </v-col>
-              <v-col cols="6" >
+              <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   v-model="postbidlistdata.cpm_value"
                   label="Goal CPM"
@@ -254,13 +254,21 @@
                   required
                 ></v-text-field>
               </v-col>
-              <v-col cols="6" >
+              <v-col cols="12" sm="6" md="4">
                 <v-select
                   v-model="postbidlistdata.cpm_currency"
                   :items="['THB', 'USD', 'JPY']"
                   label="CPM Currency"
                   required
                 ></v-select>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="postbidlistdata.count"
+                  label="Count"
+                  persistent-hint
+                  required
+                ></v-text-field>
               </v-col>
               <v-col
               cols="12"
@@ -426,7 +434,7 @@
                   required
                 ></v-select>
               </v-col>
-              <v-col cols="6" >
+              <v-col cols="12" sm="6" md="4" >
                 <v-text-field
                   v-model="postbidlistdata.cpm_value"
                   label="Goal CPM"
@@ -434,13 +442,21 @@
                   required
                 ></v-text-field>
               </v-col>
-              <v-col cols="6" >
+              <v-col cols="12" sm="6" md="4" >
                 <v-select
                   v-model="postbidlistdata.cpm_currency"
                   :items="['THB', 'USD', 'JPY']"
                   label="CPM Currency"
                   required
                 ></v-select>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="postbidlistdata.count"
+                  label="Count"
+                  persistent-hint
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="6" >
                 <v-select
@@ -716,6 +732,7 @@ export default {
       } else {
         this.postCreateAdgroupdta.adgroup = this.postadgroupdata;
       }
+      console.log(this.postCreateAdgroupdta)
       axios.post(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_adgroup",
       this.postCreateAdgroupdta,
         { 
