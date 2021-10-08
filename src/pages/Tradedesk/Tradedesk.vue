@@ -80,7 +80,30 @@
             <v-icon medium @click="deleteBidlist(item)"  :disabled="loadingDelete" >
             mdi-delete
             </v-icon>
-            </template>
+          </template>
+          <template  v-slot:item.schedule = "{item}">
+              <template v-if="{item}.schedule_key" class="mr-2">
+              <v-icon small left right>
+              mdi-checkbox-marked-outline
+              </v-icon>
+              </template>
+              <template v-else>
+              <v-icon small left right>
+              mdi-checkbox-blank-outline
+              </v-icon>
+              </template>
+              <v-icon small right >
+              mdi-border-color
+              </v-icon>
+          </template>
+            <template v-slot:item.update = "{item}">
+                <v-btn class="add-button"
+                color="primary"
+                small
+                @click="updateBidlistModal(item)"
+                :disabled="addbidlistdialog"
+                >Update</v-btn>
+              </template>
             <template v-slot:expanded-item="{ headers, item }">
             <td> </td>
             <td :colspan="headers.length-2">
@@ -560,8 +583,9 @@ export default {
         { text: 'ADGROUP', value: 'adgroup_id' },
         { text: 'STRATEGY', value: 'strategy' },
         { text: 'GOALTYPE', value: 'goal_type' },
-        { text: 'PARTNER CUR', value: 'partner_cur' },
         { text: 'LATEST UPDATE', value: 'latest_update' },
+        { text: 'SCHEDULE', value: 'schedule', sortable: false },
+        { text: 'UDATE', value: 'update', sortable: false },
         { text: 'OPTIONS', value: 'options', sortable: false },
       ],
       
@@ -716,6 +740,24 @@ export default {
           params: {
             partner: row.partner,
             adgroup_id: row.adgroup_id
+          },
+           headers: {"Content-Type": "application/json",
+           'Authorization':  `Bearer ${this.token}`
+           }
+        })
+        .then((res) => {
+          console.log(res);
+          this.fetchAdgroup();
+          this.fetchBidlist();
+        });
+    },
+    updateBidlistModal(row) {
+      // console.log("delete", row.item.BidlistId, row.item.AdGroupId);
+      this.loadingDelete = true;
+      this.loadingBidlist = true;
+      axios.post(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_bidlist_update", {}, {
+          params: {
+            bidlist_id: row.bidlist_id
           },
            headers: {"Content-Type": "application/json",
            'Authorization':  `Bearer ${this.token}`
