@@ -30,10 +30,10 @@
           <v-card-text class="pa-0" v-if="!loadingBidlist">
             <v-data-table :headers="adgroup_headers" :items="adgroupData" class="elevation-1">
               <template v-slot:item.status = '{item}'>
-              <v-switch :input-value="item.status" flat @click="changeState(item)" ></v-switch>
+              <v-switch :input-value="item.status" flat @click="changeState(item)"></v-switch>
               </template>
               <template v-slot:item.options = "{item}">
-              <v-icon medium @click="deleteAdgroup(item)"  :disabled="loadingDelete" >
+              <v-icon medium @click="deleteAdgroup(item)"  :disabled="loadingDelete" right>
               mdi-delete
               </v-icon>
               </template>
@@ -77,10 +77,33 @@
           :single-expand=true show-expand item-key="bidlist_id"
           :expanded.sync="expanded">
           <template v-slot:item.options = "{item}">
-            <v-icon medium @click="deleteBidlist(item)"  :disabled="loadingDelete" >
+            <v-icon medium @click="deleteBidlist(item)"  :disabled="loadingDelete" right>
             mdi-delete
             </v-icon>
-            </template>
+          </template>
+          <template  v-slot:item.schedule = "{item}">
+              <template v-if="{item}.schedule_key" class="mr-2">
+              <v-icon small left right>
+              mdi-checkbox-marked-outline
+              </v-icon>
+              </template>
+              <template v-else>
+              <v-icon small left right>
+              mdi-checkbox-blank-outline
+              </v-icon>
+              </template>
+              <v-icon small right >
+              mdi-border-color
+              </v-icon>
+          </template>
+            <template v-slot:item.update = "{item}">
+                <v-btn class="add-button"
+                color="primary"
+                small
+                @click="updateBidlistModal(item)"
+                :disabled="addbidlistdialog"
+                >Run</v-btn>
+              </template>
             <template v-slot:expanded-item="{ headers, item }">
             <td> </td>
             <td :colspan="headers.length-2">
@@ -353,7 +376,7 @@
               <v-col cols="3">
                 <v-text-field
                   v-model="postbidlistdata.campaign_id"
-                  label="Advertiser Id"
+                  label="Campaign Id"
                 ></v-text-field>
               </v-col>
               <v-col cols="3" >
@@ -560,8 +583,9 @@ export default {
         { text: 'ADGROUP', value: 'adgroup_id' },
         { text: 'STRATEGY', value: 'strategy' },
         { text: 'GOALTYPE', value: 'goal_type' },
-        { text: 'PARTNER CUR', value: 'partner_cur' },
         { text: 'LATEST UPDATE', value: 'latest_update' },
+        { text: 'SCHEDULE', value: 'schedule', sortable: false },
+        { text: 'UPDATE', value: 'update', sortable: false },
         { text: 'OPTIONS', value: 'options', sortable: false },
       ],
       
@@ -716,6 +740,24 @@ export default {
           params: {
             partner: row.partner,
             adgroup_id: row.adgroup_id
+          },
+           headers: {"Content-Type": "application/json",
+           'Authorization':  `Bearer ${this.token}`
+           }
+        })
+        .then((res) => {
+          console.log(res);
+          this.fetchAdgroup();
+          this.fetchBidlist();
+        });
+    },
+    updateBidlistModal(row) {
+      // console.log("delete", row.item.BidlistId, row.item.AdGroupId);
+      this.loadingDelete = true;
+      this.loadingBidlist = true;
+      axios.post(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_bidlist_update", {}, {
+          params: {
+            bidlist_id: row.bidlist_id
           },
            headers: {"Content-Type": "application/json",
            'Authorization':  `Bearer ${this.token}`
