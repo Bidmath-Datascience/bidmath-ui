@@ -30,10 +30,10 @@
           <v-card-text class="pa-0" v-if="!loadingBidlist">
             <v-data-table :headers="adgroup_headers" :items="adgroupData" class="elevation-1">
               <template v-slot:item.status = '{item}'>
-              <v-switch :input-value="item.status" flat @click="changeState(item)" ></v-switch>
+              <v-switch :input-value="item.status" flat @click="changeState(item)"></v-switch>
               </template>
               <template v-slot:item.options = "{item}">
-              <v-icon medium @click="deleteAdgroup(item)"  :disabled="loadingDelete" >
+              <v-icon medium @click="deleteAdgroup(item)"  :disabled="loadingDelete" right>
               mdi-delete
               </v-icon>
               </template>
@@ -77,7 +77,7 @@
           :single-expand=true show-expand item-key="bidlist_id"
           :expanded.sync="expanded">
           <template v-slot:item.options = "{item}">
-            <v-icon medium @click="deleteBidlist(item)"  :disabled="loadingDelete" >
+            <v-icon medium @click="deleteBidlist(item)"  :disabled="loadingDelete" right>
             mdi-delete
             </v-icon>
           </template>
@@ -102,7 +102,7 @@
                 small
                 @click="updateBidlistModal(item)"
                 :disabled="addbidlistdialog"
-                >Update</v-btn>
+                >Run</v-btn>
               </template>
             <template v-slot:expanded-item="{ headers, item }">
             <td> </td>
@@ -376,7 +376,7 @@
               <v-col cols="3">
                 <v-text-field
                   v-model="postbidlistdata.campaign_id"
-                  label="Advertiser Id"
+                  label="Campaign Id"
                 ></v-text-field>
               </v-col>
               <v-col cols="3" >
@@ -585,7 +585,7 @@ export default {
         { text: 'GOALTYPE', value: 'goal_type' },
         { text: 'LATEST UPDATE', value: 'latest_update' },
         { text: 'SCHEDULE', value: 'schedule', sortable: false },
-        { text: 'UDATE', value: 'update', sortable: false },
+        { text: 'UPDATE', value: 'update', sortable: false },
         { text: 'OPTIONS', value: 'options', sortable: false },
       ],
       
