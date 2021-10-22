@@ -5,7 +5,7 @@
         <v-col cols="7" class="main-part d-none d-md-none d-lg-flex">
           <div class="d-flex">
             <v-img src="@/assets/logo.png" contain></v-img>
-            <p>Bidmath-Programatic Solutions</p>
+            <p>Bidmath-Programmatic AI</p>
           </div>
         </v-col>
         <v-col cols="12" lg="5" class="login-part d-flex align-center justify-center">
