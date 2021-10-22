@@ -1,8 +1,8 @@
 <template>
   <v-container fluid>
-    <div class="tradedesk-page">
+    <div class="workflow-page">
       <v-row no-gutters class="d-flex justify-space-between mt-10 mb-6">
-        <h1 class="page-title">Tradedesk Campaigns</h1>
+        <h1 class="page-title">Workflow Jobs</h1>
       </v-row>
       <v-row >
         <v-col cols="12">
@@ -81,11 +81,18 @@
             mdi-delete
             </v-icon>
           </template>
-          <template  v-slot:item.schedulestr = "{item}">
-              <template class="mr-2">
-              <p> {{item.schedule.substring(10, )}} </p>
+          <template  v-slot:item.schedule = "{item}">
+              <template v-if="{item}.schedule_key" class="mr-2">
+              <v-icon small left right>
+              mdi-checkbox-marked-outline
+              </v-icon>
               </template>
-              <v-icon small right @click="showScheduleBidlistModal(item)" :disabled="schedulebidlistdialog">
+              <template v-else>
+              <v-icon small left right>
+              mdi-checkbox-blank-outline
+              </v-icon>
+              </template>
+              <v-icon small right >
               mdi-border-color
               </v-icon>
           </template>
@@ -108,7 +115,7 @@
                 </v-list-item>
                 <v-list-item>
                 <v-list-item-content>
-                <v-list-item-title>goal_type: {{item.goal_type}}, count: {{item.count}}, owner: {{item.owner}}, owner_id: {{item.owner_id}} </v-list-item-title>
+                <v-list-item-title>count: {{item.count}}, owner: {{item.owner}}, owner_id: {{item.owner_id}} </v-list-item-title>
                 </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
@@ -539,88 +546,6 @@
     </v-dialog>
     </v-row>
     </template>
-
-    <template>
-  <v-row justify="center">
-    <v-dialog
-      v-model="schedulebidlistdialog"
-      persistent
-      max-width="620px"
-    >
-      <v-card>
-        
-        <v-card-title>
-          <span class="text-h5">Schedule Bidlist for {{this.postScheduleBidlist.bidlist_id}}</span>
-        </v-card-title>
-        <v-card-text v-if="!loadingAdd" >
-          <v-card-subtitle>
-            <span class="text-h5">**Schedule time is in UTC</span>
-          </v-card-subtitle>
-          <v-container>
-            <v-row>
-              <v-col cols="4" >
-                <v-text-field
-                  v-model="postScheduleData.minute"
-                  label="Minute" hint="0-59"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="4">
-                <v-text-field
-                  v-model="postScheduleData.hour"
-                  label="Hour" hint="0-23"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="4">
-                <v-text-field
-                  v-model="postScheduleData.day_of_week"
-                  label="Day-of-week" hint="0-6 Sunday is 0"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="4" >
-                <v-text-field
-                  v-model="postScheduleData.day_of_month"
-                  label="Day-of-month" hint="1-31"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="4" >
-                <v-text-field
-                  v-model="postScheduleData.month_of_year"
-                  label="Month-of-year" hint="1-12"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            
-          </v-container>
-        </v-card-text>
-        <v-card-text v-else-if="loadingAdd" align="center">
-            <v-progress-circular
-                :size="70"
-                :width="7"
-                color="purple"
-                indeterminate
-            ></v-progress-circular>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="schedulebidlistdialog = false"
-          >
-            Close
-          </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="createSchedule"
-          >
-            Create
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    </v-row>
-    </template>
     </div>
   </v-container>
 </template>
@@ -628,7 +553,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "Tradedesk",
+  name: "Workflow",
   data() {
     return {
       expanded: [],
@@ -657,8 +582,9 @@ export default {
         { text: 'NAME', value: 'name' },
         { text: 'ADGROUP', value: 'adgroup_id' },
         { text: 'STRATEGY', value: 'strategy' },
+        { text: 'GOALTYPE', value: 'goal_type' },
         { text: 'LATEST UPDATE', value: 'latest_update' },
-        { text: 'SCHEDULE (UTC)', value: 'schedulestr', sortable: false },
+        { text: 'SCHEDULE', value: 'schedule', sortable: false },
         { text: 'UPDATE', value: 'update', sortable: false },
         { text: 'OPTIONS', value: 'options', sortable: false },
       ],
@@ -672,7 +598,6 @@ export default {
       dummy:'',
       addadgroupdialog: false,
       addbidlistdialog: false,
-      schedulebidlistdialog: false,
       adddialogresult: "No response yet",
       postadgroupdata: {
           name: "",
@@ -701,19 +626,8 @@ export default {
         cpm_value: " " ,
         cpm_currency: ""
       },
-      postCreateAdgroupdta: {},
-      postScheduleData: {
-        minute: "*",
-        hour: "*",
-        day_of_week: "*",
-        day_of_month: "*",
-        month_of_year: "*"
-      },
-      postScheduleBidlist: {
-        bidlist_id: "",
-        schedule: "",
-        scheduled_key: ""
-      }
+      postCreateAdgroupdta: {}
+
     };
   },
   methods: {
@@ -800,11 +714,6 @@ export default {
       this.adddialogresult= "No response yet";
       this.addadgroupdialog = true;
     },
-    showScheduleBidlistModal(item) {
-      this.postScheduleBidlist.bidlist_id = item.bidlist_id;
-      this.schedulebidlistdialog = true;
-      this.postScheduleBidlist.scheduled_key = item.scheduled_key;
-    },
     deleteBidlist(row) {
       // console.log("delete", row.item.BidlistId, row.item.AdGroupId);
       this.loadingDelete = true;
@@ -812,8 +721,7 @@ export default {
       axios.delete(process.env.VUE_APP_BASE_URL + "/ttd_api/ttd_bidlist/"+row.bidlist_id, {
           params: {
             partner: row.partner,
-            bidlist_id: row.bidlist_id,
-            scheduled_key: row.scheduled_key
+            bidlist_id: row.bidlist_id
           },
            headers: {"Content-Type": "application/json",
            'Authorization':  `Bearer ${this.token}`
@@ -860,29 +768,6 @@ export default {
           this.fetchAdgroup();
           this.fetchBidlist();
         });
-    },
-    createSchedule() {
-      this.loadingAdd = true;
-      this.postScheduleBidlist.schedule = this.postScheduleData
-      axios.post(process.env.VUE_APP_BASE_URL + "/ttd_api/schedule_ttdbidlist/"+this.postScheduleBidlist.bidlist_id,
-      this.postScheduleBidlist,
-        { 
-          headers: {"Content-Type": "application/json",
-           'Authorization':  `Bearer ${this.token}`
-           }
-        })
-        .then((res) => {
-          console.log(res.data);
-          // this.createAdgroupRes = res.data;
-          
-          //this.fetchAdgroup();
-        })
-        .finally(() => {
-          this.fetchBidlist();
-          this.loadingAdd = false;
-          this.schedulebidlistdialog= false;
-        });
-
     },
     createAdgroup() {
       this.loadingAdd = true;
@@ -949,4 +834,4 @@ export default {
 };
 </script>
 
-<style src="./Tradedesk.scss" lang="scss"/>
+<style src="./Workflow.scss" lang="scss"/>
