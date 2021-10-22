@@ -10,6 +10,7 @@ import Dashboard from '@/pages/Dashboard/Dashboard';
 //import Icons from '@/pages/Icons/Icons';
 import Error from "@/pages/Error/Error";
 import Tradedesk from '@/pages/Tradedesk/Tradedesk';
+//import Workflow from '@/pages/Workflow/Workflow';
 
 Vue.use(Router);
 
