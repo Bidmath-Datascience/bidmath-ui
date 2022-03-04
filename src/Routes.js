@@ -23,7 +23,7 @@ export default new Router({
         component: Login,
       },
       {
-        path: '/planbudget',
+        path: '/reachtool/th',
         name: 'PlanningTool',
         component: PlanningTool,
       },
