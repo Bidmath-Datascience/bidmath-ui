@@ -5,7 +5,9 @@ import store from './store/index'
 import router from './Routes'
 import VueCookies from 'vue-cookies';
 import axios from "axios";
+import vueNumeralFilterInstaller from "vue-numeral-filter";
 
+Vue.use(vueNumeralFilterInstaller);
 Vue.use(VueCookies);
 Vue.use(axios);
 
