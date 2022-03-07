@@ -9,7 +9,7 @@
     fixed
     color='white'>
       <h1 style="font-size:20px;color:black;font-family:Hind">
-     BIDMATH REACH PLANNING TOOL - THAILAND MARKET</h1>
+     BIDMATH - REACH TOOL - TH</h1>
       <v-spacer></v-spacer>
       <v-img  max-height="28"
   max-width="120" src="@/assets/logo_name.png"></v-img> 
@@ -191,9 +191,6 @@
         </p>
         <p class="text-left">
           5. "Standard" in the drop down under "Unit/video lenth" for "Programmatic display" are static IAB standard display banners of desktop and mobile sizes like 300x250, 160x600, 120x600, 728x90, 300x50, 320x50 etc
-        </p>
-        <p class="text-left">
-          ***Reach out to your Bidmath team regarding Programmatic Audio ads reach and CPM
         </p>
         </v-card-text >
         </v-card>
