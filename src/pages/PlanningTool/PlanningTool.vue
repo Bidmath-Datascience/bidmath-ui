@@ -554,7 +554,7 @@ export default {
           {key : "Skippable", cpm : 66.23} ],
         programmatic_video : [
           {key : "Non-Skippable (15s, 30s)", cpm: 68.88}, 
-          {key : "Bumpers", cpm : 47.00},
+          {key : "Bumper", cpm : 47.00},
           {key: "Skippable", cpm : 66.56},],
         facebook : [
           {key: "Social Static Post", cpm : 33.00},
