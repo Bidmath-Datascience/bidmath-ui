@@ -10,6 +10,7 @@ import Dashboard from '@/pages/Dashboard/Dashboard';
 //import Icons from '@/pages/Icons/Icons';
 import Error from "@/pages/Error/Error";
 import Tradedesk from '@/pages/Tradedesk/Tradedesk';
+import Dv360 from '@/pages/Dv360/Dv360';
 import PlanningTool from '@/pages/PlanningTool/PlanningTool'
 //import Workflow from '@/pages/Workflow/Workflow';
 
@@ -47,6 +48,11 @@ export default new Router({
           path: 'tradedesk',
           name: 'Tradedesk',
           component: Tradedesk,
+        },
+        {
+          path: '/Dv360',
+          name: 'Dv360',
+          component: Dv360,
         },
         //{
         //  path: 'icons',

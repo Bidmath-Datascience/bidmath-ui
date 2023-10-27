@@ -103,7 +103,8 @@ import {mapActions, mapState} from 'vuex'
       return {
         items: [
           { title: 'Dashboard', icon: 'mdi-home', link: '/dashboard' },
-          { title: 'Tradedesk', icon: 'mdi-numeric-1-circle', link: '/tradedesk' }
+          { title: 'Tradedesk', icon: 'mdi-numeric-1-circle', link: '/tradedesk' },
+          { title: 'DV360', icon: 'mdi-numeric-2-circle', link: '/Dv360' }
         ],
         sidebarWidth: 240,
         sidebarMinWidth: 96
