@@ -3,6 +3,7 @@ on:
   push:
     branches: [main]
 
+    
 jobs:
   build-and-deploy:
     name: Build and Deploy Image to Cloud Run
@@ -23,6 +24,11 @@ jobs:
       - name: Build Image
         run: |
           docker build -t asia.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA .
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.SERVICE_JSON }}'
       - name: Gcloud Authentication
         run: |
           gcloud auth configure-docker -q
